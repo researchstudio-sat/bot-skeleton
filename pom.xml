@@ -42,12 +42,6 @@
             <artifactId>httpclient</artifactId>
             <version>4.5.3</version>
         </dependency>
-
-        <!--dependency>
-            <groupId>at.researchstudio.sat</groupId>
-            <artifactId>won-utils-goals</artifactId>
-            <version>0.4</version>
-        </dependency-->
     </dependencies>
     <build>
         <pluginManagement>
