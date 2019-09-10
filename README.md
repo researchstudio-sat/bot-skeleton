@@ -19,16 +19,19 @@ The echo bot is a [Spring Boot Application](https://docs.spring.io/spring-boot/d
 - Set up encryption with Bouncy Castle:
 
 1. In `folder specified in config`, open a command line and run the following commands:
-  1. `openssl req -x509 -newkey rsa:2048 -keyout t-key.pem -out t-cert.pem  -passout pass:changeit -days 365 -subj "//CN=myhost.mydomain.com"`
-  1. `openssl pkcs12 -export -out tmpfile -passout pass:changeit -inkey t-key.pem -passin pass:changeit -in t-cert.pem`
-  1. `"$JAVA_HOME/bin/keytool.exe" -importkeystore -srckeystore sometmpfile_deletme -srcstoretype pkcs12 -destkeystore t-keystore.jks -deststoretype JKS -srcstorepass changeit  -deststorepass changeit`
-  1. `rm tmpfile`
+    1. `openssl req -x509 -newkey rsa:2048 -keyout t-key.pem -out t-cert.pem  -passout pass:changeit -days 365 -subj "//CN=myhost.mydomain.com"`
+    1. `openssl pkcs12 -export -out tmpfile -passout pass:changeit -inkey t-key.pem -passin pass:changeit -in t-cert.pem`
+    1. `"$JAVA_HOME/bin/keytool.exe" -importkeystore -srckeystore sometmpfile_deletme -srcstoretype pkcs12 -destkeystore t-keystore.jks -deststoretype JKS -srcstorepass changeit  -deststorepass changeit`
+    1. `rm tmpfile`
 
-- If you are unable to generate long keys, refer to [Step 3 of this tutorial](https://www.baeldung.com/java-bouncy-castle)
-  - for Java 8
+If you are unable to generate long keys, refer to [Step 3 of this tutorial](https://www.baeldung.com/java-bouncy-castle)
+
+- for Java 8
     - download and install the [Java Cryptographic Extension](https://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html)
     - Install the Bouncy Castle security provider by navigating to the JRE installation directory and editing the file `lib/security/java.security`
     - Within `java.security`, find the list of providers and add the line `security.provider.11=org.bouncycastle.jce.provider.BouncyCastleProvider`
+- for Java 9 and up
+    - setting the crypto.policy property to unlimited by adding `Security.setProperty("crypto.policy", "unlimited");`
 
 ---
 
