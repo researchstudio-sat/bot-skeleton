@@ -31,8 +31,6 @@ To start up the echo bot, use the following command line parameters, with paths 
 ```
 -DWON_CONFIG_DIR=C:\DATA\DEV\bot-skeleton\conf
 -DWON_NODE_URI=https://hackathonnode.matchat.org/won
--XX:PermSize=1024m
--XX:MaxPermSize=2048m
 -Dlogback.configurationFile=C:\DATA\DEV\bot-skeleton\conf\logback.xml
 -Dlogging.config=C:\DATA\DEV\bot-skeleton\conf\logback.xml
 ```
