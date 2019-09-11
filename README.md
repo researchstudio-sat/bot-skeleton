@@ -33,8 +33,8 @@ To start up the echo bot, use the following command line parameters, with paths 
 -DWON_NODE_URI=https://hackathonnode.matchat.org/won
 -XX:PermSize=1024m
 -XX:MaxPermSize=2048m
--Dlogback.configurationFile=C:\DATA\DEV\Source\bot-skeleton\conf\logback.xml
--Dlogging.config=C:\DATA\DEV\Source\bot-skeleton\conf\logback.xml
+-Dlogback.configurationFile=C:\DATA\DEV\bot-skeleton\conf\logback.xml
+-Dlogging.config=C:\DATA\DEV\bot-skeleton\conf\logback.xml
 ```
 
 If you get a message indicating your keysize is restricted on startup, refer to [Step 3 of this tutorial](https://www.baeldung.com/java-bouncy-castle) to increase the allowed key size.
