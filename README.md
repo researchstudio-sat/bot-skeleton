@@ -29,12 +29,12 @@ The echo bot is a [Spring Boot Application](https://docs.spring.io/spring-boot/d
 
 To start up the echo bot, use the following command line parameters, with paths adjusted to your environment:
 ```
--DWON_CONFIG_DIR=C:\DATA\DEV\Source\echobot-test\conf.local
+-DWON_CONFIG_DIR=C:\DATA\DEV\bot-skeleton\conf
 -DWON_NODE_URI=https://hackathonnode.matchat.org/won
 -XX:PermSize=1024m
 -XX:MaxPermSize=2048m
--Dlogback.configurationFile=C:\DATA\DEV\Source\echobot-test\conf.local\logback.xml
--Dlogging.config=C:\DATA\DEV\Source\echobot-test\conf.local\logback.xml
+-Dlogback.configurationFile=C:\DATA\DEV\Source\bot-skeleton\conf\logback.xml
+-Dlogging.config=C:\DATA\DEV\Source\bot-skeleton\conf\logback.xml
 ```
 
 If you get a message indicating your keysize is restricted on startup, refer to [Step 3 of this tutorial](https://www.baeldung.com/java-bouncy-castle) to increase the allowed key size.
@@ -49,3 +49,10 @@ If you get a message indicating your keysize is restricted on startup, refer to 
 ## Implement your own bot
 
 Once the echo bot is running, you can use it as a base for implementing your own application. Refer to the general [Bot Readme](https://github.com/researchstudio-sat/webofneeds/blob/master/webofneeds/won-bot/README.md) for more information on Web of Needs Bot applications. 
+
+### Hackathon Goals
+
+* Run the bot successfully
+* Change the bot to do something slightly different, e.g.
+    * instead of an echo, let the bot send a fortune cookie message
+    * only react to a specific type of atoms, like CyclingInterests
