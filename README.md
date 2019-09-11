@@ -24,7 +24,20 @@ The echo bot is a [Spring Boot Application](https://docs.spring.io/spring-boot/d
     1. `"$JAVA_HOME/bin/keytool.exe" -importkeystore -srckeystore tmpfile -srcstoretype pkcs12 -destkeystore t-keystore.jks -deststoretype JKS -srcstorepass changeit  -deststorepass changeit`
     1. `rm tmpfile`
 -->
-If you are unable to generate long keys, refer to [Step 3 of this tutorial](https://www.baeldung.com/java-bouncy-castle)
+
+## Running the echo bot
+
+To start up the echo bot, use the following command line parameters, with paths adjusted to your environment:
+```
+-DWON_CONFIG_DIR=C:\DATA\DEV\Source\echobot-test\conf.local
+-DWON_NODE_URI=https://hackathonnode.matchat.org/won
+-XX:PermSize=1024m
+-XX:MaxPermSize=2048m
+-Dlogback.configurationFile=C:\DATA\DEV\Source\echobot-test\conf.local\logback.xml
+-Dlogging.config=C:\DATA\DEV\Source\echobot-test\conf.local\logback.xml
+```
+
+If you get a message indicating your keysize is restricted on startup, refer to [Step 3 of this tutorial](https://www.baeldung.com/java-bouncy-castle) to increase the allowed key size.
 
 - for Java 8
     - download and install the [Java Cryptographic Extension](https://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html)
@@ -32,19 +45,6 @@ If you are unable to generate long keys, refer to [Step 3 of this tutorial](http
     - Within `java.security`, find the list of providers and add the line `security.provider.11=org.bouncycastle.jce.provider.BouncyCastleProvider`
 - for Java 9 and up
     - setting the crypto.policy property to unlimited by adding `Security.setProperty("crypto.policy", "unlimited");`
-
----
-
-## Running the echo bot
-
-To start up the echo bot, use the following command line parameters, with paths adjusted to your environment:
-```
--XX:PermSize=1024m
--XX:MaxPermSize=2048m
--DWON_CONFIG_DIR=C:\DATA\DEV\Source\echobot-test\conf.local
--Dlogback.configurationFile=C:\DATA\DEV\Source\echobot-test\conf.local\logback.xml
--Dlogging.config=C:\DATA\DEV\Source\echobot-test\conf.local\logback.xml
-```
 
 ## Implement your own bot
 
