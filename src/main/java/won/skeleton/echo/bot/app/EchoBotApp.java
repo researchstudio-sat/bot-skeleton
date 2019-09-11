@@ -1,4 +1,4 @@
-package at.quasarchimaere.echo.app;
+package won.skeleton.echo.bot.app;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
