@@ -1,4 +1,4 @@
-package at.quasarchimaere.echo.impl;
+package won.skeleton.echo.bot.impl;
 
 import won.bot.framework.bot.base.EventBot;
 import won.bot.framework.eventbot.EventListenerContext;
