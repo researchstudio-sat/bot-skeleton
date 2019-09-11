@@ -19,14 +19,25 @@ The echo bot is a [Spring Boot Application](https://docs.spring.io/spring-boot/d
 
 ## Running the echo bot
 
-To start up the echo bot, use the following command line parameters, with paths adjusted to your environment:
+### On the command line
 
+In the project directory:
 ```
--DWON_CONFIG_DIR=C:\DATA\DEV\bot-skeleton\conf
--DWON_NODE_URI=https://hackathonnode.matchat.org/won
--Dlogback.configurationFile=C:\DATA\DEV\bot-skeleton\conf\logback.xml
--Dlogging.config=C:\DATA\DEV\bot-skeleton\conf\logback.xml
+export WON_CONFIG_DIR="$(pwd)/conf"
+export WON_NODE_URI="https://hackathonnode.matchat.org/won"
+mvn spring-boot:run
 ```
+
+### In Intellij Idea
+1. Create a run configuration for the class `won.bot.skeleton.EchoBotApp`
+2. Add the environment variables
+
+  * `WON_CONFIG_DIR` pointing to the `conf` directory
+  * `WON_NODE_URI` pointing to your node uri (e.g. `https://hackathonnode.matchat.org/won`)
+  
+  to your run configuration.
+  
+3. Run your configuration
 
 If you get a message indicating your keysize is restricted on startup, refer to [Step 3 of this tutorial](https://www.baeldung.com/java-bouncy-castle) to increase the allowed key size.
 
