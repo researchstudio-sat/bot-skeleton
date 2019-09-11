@@ -39,7 +39,7 @@ mvn spring-boot:run
   
 3. Run your configuration
 
-If you get a message indicating your keysize is restricted on startup, refer to [Step 3 of this tutorial](https://www.baeldung.com/java-bouncy-castle) to increase the allowed key size.
+If you get a message indicating your keysize is restricted on startup (`JCE unlimited strength encryption policy is not enabled, WoN applications will not work. Please consult the setup guide.`), refer to [Step 3 of this tutorial](https://www.baeldung.com/java-bouncy-castle) to increase the allowed key size.
 
 - for Java 8
   - download and install the [Java Cryptographic Extension](https://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html)
