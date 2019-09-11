@@ -33,7 +33,7 @@ mvn spring-boot:run
 2. Add the environment variables
 
   * `WON_CONFIG_DIR` pointing to the `conf` directory
-  * `WON_NODE_URI` pointing to your node uri (e.g. `https://hackathonnode.matchat.org/won`)
+  * `WON_NODE_URI` pointing to your node uri (e.g. `https://hackathonnode.matchat.org/won` without quotes)
   
   to your run configuration.
   
