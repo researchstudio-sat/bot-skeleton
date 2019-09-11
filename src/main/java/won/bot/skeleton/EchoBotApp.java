@@ -1,4 +1,4 @@
-package won.skeleton.echo.bot.app;
+package won.bot.skeleton;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
