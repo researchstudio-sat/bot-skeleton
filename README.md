@@ -8,7 +8,7 @@ The echo bot is a [Spring Boot Application](https://docs.spring.io/spring-boot/d
 
 ## Prerequisites
 
-- [Java 8 JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) or higher installed
+- [Java 8 JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) or higher installed (openJDK 12 is currently not supported and won't work)
 - Java IDE of choice set up
 - Maven frameworks set up
 
