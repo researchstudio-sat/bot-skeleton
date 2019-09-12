@@ -39,14 +39,7 @@ mvn spring-boot:run
   
 3. Run your configuration
 
-If you get a message indicating your keysize is restricted on startup (`JCE unlimited strength encryption policy is not enabled, WoN applications will not work. Please consult the setup guide.`), refer to [Step 3 of this tutorial](https://www.baeldung.com/java-bouncy-castle) to increase the allowed key size.
-
-- for Java 8
-  - download and install the [Java Cryptographic Extension](https://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html)
-  - Install the Bouncy Castle security provider by navigating to the JRE installation directory and editing the file `lib/security/java.security`
-  - Within `java.security`, find the list of providers and add the line `security.provider.11=org.bouncycastle.jce.provider.BouncyCastleProvider`
-- for Java 9 and up
-  - setting the crypto.policy property to unlimited by adding `Security.setProperty("crypto.policy", "unlimited");`
+If you get a message indicating your keysize is restricted on startup (`JCE unlimited strength encryption policy is not enabled, WoN applications will not work. Please consult the setup guide.`), refer to [Enabling Unlimited Strength Jurisdiction Policy](https://github.com/open-eid/cdoc4j/wiki/Enabling-Unlimited-Strength-Jurisdiction-Policy) to increase the allowed key size.
 
 ## Implement your own bot
 
