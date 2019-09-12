@@ -23,7 +23,7 @@
     <import resource="classpath:spring/component/botContext/botContext.xml"/>
     <import resource="classpath:/spring/component/atomproducer/atomproducer-mixed.xml"/>
 
-    <bean id="EchoBot" class="won.bot.impl.EchoBot">
+    <bean id="EchoBot" class="won.skeleton.echo.bot.impl.EchoBot">
         <!-- optional property, by default one echo atom per each atom will be created -->
         <property name="numberOfEchoAtomsPerAtom" value="1"/>
         <property name="taskScheduler" ref="taskScheduler"/>
