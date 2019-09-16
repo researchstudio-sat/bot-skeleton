@@ -27,7 +27,7 @@ public class EchoBotApp {
         if (failed) {
             System.exit(1);
         }
-        SpringApplication app = new SpringApplication("classpath:/spring/app/echoBotApp.xml");
+        SpringApplication app = new SpringApplication("classpath:/spring/app/botApp.xml");
         app.setWebEnvironment(false);
         app.run(args);
         // ConfigurableApplicationContext applicationContext = app.run(args);

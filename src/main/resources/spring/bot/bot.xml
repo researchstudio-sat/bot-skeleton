@@ -48,6 +48,6 @@
 
     <bean id="botContextWrapper" class="won.bot.framework.bot.context.BotContextWrapper">
         <constructor-arg name="botContext" ref="${botContext.impl}"/>
-        <constructor-arg name="botName" value="EchoBot"/>
+        <constructor-arg name="botName" value="${bot.name}"/>
     </bean>
 </beans>
