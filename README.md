@@ -44,27 +44,3 @@ If you get a message indicating your keysize is restricted on startup (`JCE unli
 ## Implement your own bot
 
 Once the echo bot is running, you can use it as a base for implementing your own application. Refer to the general [Bot Readme](https://github.com/researchstudio-sat/webofneeds/blob/master/webofneeds/won-bot/README.md) for more information on Web of Needs Bot applications.
-
-### Hackathon Goals
-
-#### Dear lovely Tester!
-
-First of all thank you for your interest in testing our technology and also lending us your time.
-
-In this test we want to proof, that it is possible to install and run our bot framework for a simple echo bot within 2 hours.
-This echo bot will connect himself to our hackathon instance and will react per default to every new atom that is created at https://hackathon.matchat.org.
-
-To get started follow the instructions on https://github.com/researchstudio-sat/bot-skeleton
-
-### Goals
-
-1. Setup the framework
-2. Start the bot
-3. Create an atom and get connected with your bot at: https://hackathon.matchat.org
-
-### Advanced goals
-
-4. Instead of an echo, let the bot send a fortune cookie message
-5. Only react to a specific type of atoms, like CyclingInterests
-
-Questions and feedback are explicity welcomed
