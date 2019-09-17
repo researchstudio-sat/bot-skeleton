@@ -21,6 +21,7 @@ export WON_CONFIG_DIR="$(pwd)/conf"
 export WON_NODE_URI="https://hackathonnode.matchat.org/won"
 mvn spring-boot:run
 ```
+Now [create an atom](https://hackathon.matchat.org/owner/#!/create) to see the bot in action.
 
 ### In Intellij Idea
 1. Create a run configuration for the class `won.bot.skeleton.EchoBotApp`
@@ -35,6 +36,7 @@ mvn spring-boot:run
 
 If you get a message indicating your keysize is restricted on startup (`JCE unlimited strength encryption policy is not enabled, WoN applications will not work. Please consult the setup guide.`), refer to [Enabling Unlimited Strength Jurisdiction Policy](https://github.com/open-eid/cdoc4j/wiki/Enabling-Unlimited-Strength-Jurisdiction-Policy) to increase the allowed key size.
 
+Now [create an atom](https://hackathon.matchat.org/owner/#!/create) to see the bot in action.
 
 ## Start coding
 
