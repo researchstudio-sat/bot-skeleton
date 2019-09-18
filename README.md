@@ -6,7 +6,7 @@ This skeleton contains an echo bot that reacts to each new atom created on a giv
 
 The echo bot is a [Spring Boot Application](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-running-your-application.html).
 
-## Running the echo bot
+## Running the bot
 
 ### Prerequisites
 
