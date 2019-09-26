@@ -15,8 +15,8 @@ The echo bot is a [Spring Boot Application](https://docs.spring.io/spring-boot/d
 
 ### On the command line
 
-In the project directory:
 ```
+cd bot-skeleton
 export WON_CONFIG_DIR="$(pwd)/conf"
 export WON_NODE_URI="https://hackathonnode.matchat.org/won"
 mvn spring-boot:run
