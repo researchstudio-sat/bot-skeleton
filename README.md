@@ -1,4 +1,4 @@
-# Web of Needs Bot Skeleton ReadMe
+# Web of Needs Bot Skeleton
 
 This skeleton contains an echo bot that reacts to each new atom created on a given node. For each atom, the bot sends a configurable number of contact requests (default is 3) that can be accepted by the user. Within the established chat, the bot echoes all sent messages.
 
@@ -6,27 +6,22 @@ This skeleton contains an echo bot that reacts to each new atom created on a giv
 
 The echo bot is a [Spring Boot Application](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-running-your-application.html).
 
-## Prerequisites
+## Running the bot
+
+### Prerequisites
 
 - [Java 8 JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) or higher installed (openJDK 12 is currently not supported and won't work)
-- Java IDE of choice set up
-- Maven frameworks set up
-
-## Setting up
-
-- Download or clone this repository
-- Add config files
-
-## Running the echo bot
+- Maven framework set up
 
 ### On the command line
 
-In the project directory:
 ```
+cd bot-skeleton
 export WON_NODE_URI="https://hackathonnode.matchat.org/won"
 mvn clean package
 java -jar target/bot.jar
 ```
+Now [create an atom](https://hackathon.matchat.org/owner/#!/create) to see the bot in action.
 
 ### In Intellij Idea
 1. Create a run configuration for the class `won.bot.skeleton.SkeletonBotApp`
@@ -43,30 +38,21 @@ If you get a message indicating your keysize is restricted on startup (`JCE unli
 ##### Optional Parameters for both Run Configurations:
 - `WON_KEYSTORE_DIR` path to folder where `bot-keys.jks` and `owner-trusted-certs.jks` are stored (needs write access and folder must exist) 
 
-## Implement your own bot
+Now [create an atom](https://hackathon.matchat.org/owner/#!/create) to see the bot in action.
 
-Once the skeleton bot is running, you can use it as a base for implementing your own application. Refer to the general [Bot Readme](https://github.com/researchstudio-sat/webofneeds/blob/master/webofneeds/won-bot/README.md) for more information on Web of Needs Bot applications.
+## Start coding
 
-### Hackathon Goals
+Once the skeleton bot is running, you can use it as a base for implementing your own application. 
 
-#### Dear lovely Tester!
+### Prerequisites
 
-First of all thank you for your interest in testing our technology and also lending us your time.
+- [Java 8 JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) or higher installed (openJDK 12 is currently not supported and won't work)
+- Java IDE of choice set up
+- Maven framework set up
 
-In this test we want to proof, that it is possible to install and run our bot framework for a simple echo bot within 2 hours.
-This echo bot will connect himself to our hackathon instance and will react per default to every new atom that is created at https://hackathon.matchat.org.
+## Setting up
+- Download or clone this repository
+- Add config files
 
-To get started follow the instructions on https://github.com/researchstudio-sat/bot-skeleton
+Please refer to the general [Bot Readme](https://github.com/researchstudio-sat/webofneeds/blob/master/webofneeds/won-bot/README.md) for more information on Web of Needs Bot applications.
 
-### Goals
-
-1. Setup the framework
-2. Start the bot
-3. Create an atom and get connected with your bot at: https://hackathon.matchat.org
-
-### Advanced goals
-
-4. Instead of an echo, let the bot send a fortune cookie message
-5. Only react to a specific type of atoms, like CyclingInterests
-
-Questions and feedback are explicity welcomed
