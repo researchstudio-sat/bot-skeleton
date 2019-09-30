@@ -18,20 +18,16 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
-
-    <import resource="classpath:spring/component/nodeurisource/nodeurisource-random.xml"/>
-    <import resource="classpath:spring/component/botContext/botContext.xml"/>
-    <import resource="classpath:/spring/component/atomproducer/atomproducer-mixed.xml"/>
-
-    <bean id="echoBot" class="won.skeleton.echo.bot.impl.EchoBot">
-        <!-- optional property, by default one echo atom per each atom will be created -->
+    <bean id="echoBot" class="won.bot.skeleton.impl.SkeletonBot">
         <property name="taskScheduler" ref="taskScheduler"/>
         <property name="botContextWrapper" ref="botContextWrapper"/>
-        <!--property name="atomProducer" ref="atomProducerFromMails" /-->
+        <property name="atomProducer">
+            <!-- since this bot does not create any atoms from other source, e.g rdf-files, mails etc, adding the NopAtomProducer will suffice, as it is never used -->
+            <bean class="won.bot.framework.component.atomproducer.impl.NopAtomProducer"/>
+        </property>
+
         <!--property name="nodeURISource" ref="nodeUriSourceRandom" /-->
         <property name="matcherNodeURISource" ref="matcherNodeURISource"/>
-        <!-- expects a bean named "ownerProtocolAtomServiceClient" in the context -->
-        <!--property name="ownerService" ref="ownerProtocolAtomServiceClient" /-->
         <property name="matcherProtocolAtomServiceClient" ref="matcherProtocolAtomServiceClient"/>
         <property name="matcherProtocolMatcherService" ref="matcherProtocolMatcherServiceJMSBased"/>
         <property name="registrationMatcherRetryInterval" value="5000"/>
