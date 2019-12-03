@@ -20,9 +20,9 @@ import won.bot.framework.eventbot.action.impl.atomlifecycle.AbstractCreateAtomAc
 import won.bot.framework.eventbot.event.AtomCreationFailedEvent;
 import won.bot.framework.eventbot.event.Event;
 import won.bot.framework.eventbot.event.impl.atomlifecycle.AtomCreatedEvent;
-import won.bot.framework.eventbot.event.impl.matcher.AtomCreatedEventForMatcher;
 import won.bot.framework.eventbot.event.impl.wonmessage.FailureResponseEvent;
 import won.bot.framework.eventbot.listener.EventListener;
+import won.bot.framework.extensions.matcher.MatcherExtensionAtomCreatedEvent;
 import won.protocol.message.WonMessage;
 import won.protocol.service.WonNodeInformationService;
 import won.protocol.util.DefaultAtomModelWrapper;
@@ -46,44 +46,50 @@ public class CreateEchoAtomWithSocketsAction extends AbstractCreateAtomAction {
     @Override
     protected void doRun(Event event, EventListener executingListener) throws Exception {
         EventListenerContext ctx = getEventListenerContext();
-        String replyText = "";
-        if (!(event instanceof AtomCreatedEventForMatcher)) {
-            logger.error("CreateEchoAtomWithSocketsAction can only handle AtomCreatedEventForMatcher");
+
+        // check event type
+        if (!(event instanceof MatcherExtensionAtomCreatedEvent)) {
+            logger.error("CreateEchoAtomWithSocketsAction can only handle MatcherExtensionAtomCreatedEvent");
             return;
         }
-        final URI reactingToAtomUri = ((AtomCreatedEventForMatcher) event).getAtomURI();
-        final Dataset atomDataset = ((AtomCreatedEventForMatcher) event).getAtomData();
-        DefaultAtomModelWrapper atomModelWrapper = new DefaultAtomModelWrapper(atomDataset);
-        String titleString = atomModelWrapper.getSomeTitleFromIsOrAll("en", "de");
-        if (titleString != null) {
-            replyText = titleString;
-        } else {
-            replyText = "Your Posting (" + reactingToAtomUri.toString() + ")";
-        }
+
+        // get needed information
         WonNodeInformationService wonNodeInformationService = ctx.getWonNodeInformationService();
         final URI wonNodeUri = ctx.getNodeURISource().getNodeURI();
         final URI atomURI = wonNodeInformationService.generateAtomURI(wonNodeUri);
+        URI reactingToAtomUri = ((MatcherExtensionAtomCreatedEvent) event).getAtomURI();
+
+        Dataset atomDataset = ((MatcherExtensionAtomCreatedEvent) event).getAtomData();
+        DefaultAtomModelWrapper atomModelWrapper = atomDataset != null ? new DefaultAtomModelWrapper(atomDataset) : new DefaultAtomModelWrapper(atomURI);
+
+
+        // determine and set information of new atom
+        String titleString = atomModelWrapper.getSomeTitleFromIsOrAll("en", "de");
+        String atomTitle = titleString != null ? titleString : "Your Posting (" + reactingToAtomUri.toString() + ")";
         atomModelWrapper = new DefaultAtomModelWrapper(atomURI);
-        atomModelWrapper.setTitle("RE: " + replyText);
+        atomModelWrapper.setTitle("RE: " + atomTitle);
         atomModelWrapper.setDescription("This is an atom automatically created by the EchoBot.");
-        atomModelWrapper.setSeeksTitle("RE: " + replyText);
-        atomModelWrapper.setSeeksDescription("This is an atom automatically created by the EchoBot.");
+//        atomModelWrapper.setSeeksTitle("RE: " + atomTitle);
+//        atomModelWrapper.setSeeksDescription("This is an atom automatically created by the EchoBot.");
+
         int i = 1;
         for (URI socket : sockets) {
             atomModelWrapper.addSocket(atomURI.toString() + "#socket" + i, socket.toString());
             i++;
         }
+
         final Dataset echoAtomDataset = atomModelWrapper.copyDataset();
+        WonMessage createAtomMessage = createWonMessage(atomURI, wonNodeUri, echoAtomDataset);
         logger.debug("creating atom on won node {} with content {} ", wonNodeUri,
                         StringUtils.abbreviate(RdfUtils.toString(echoAtomDataset), 150));
-        WonMessage createAtomMessage = createWonMessage(wonNodeInformationService, atomURI, wonNodeUri,
-                        echoAtomDataset);
+
+
         // remember the atom URI so we can react to success/failure responses
         EventBotActionUtils.rememberInList(ctx, atomURI, uriListName);
         EventListener successCallback = event12 -> {
             logger.debug("atom creation successful, new atom URI is {}", atomURI);
             // save the mapping between the original and the reaction in to the context.
-            getEventListenerContext().getBotContextWrapper().addUriAssociation(reactingToAtomUri, atomURI);
+            ctx.getBotContextWrapper().addUriAssociation(reactingToAtomUri, atomURI);
             ctx.getEventBus().publish(new AtomCreatedEvent(atomURI, wonNodeUri, echoAtomDataset, null));
         };
         EventListener failureCallback = event1 -> {
@@ -96,7 +102,7 @@ public class CreateEchoAtomWithSocketsAction extends AbstractCreateAtomAction {
         };
         EventBotActionUtils.makeAndSubscribeResponseListener(createAtomMessage, successCallback, failureCallback, ctx);
         logger.debug("registered listeners for response to message URI {}", createAtomMessage.getMessageURI());
-        getEventListenerContext().getWonMessageSender().sendWonMessage(createAtomMessage);
+        getEventListenerContext().getWonMessageSender().sendMessage(createAtomMessage);
         logger.debug("atom creation message sent with message URI {}", createAtomMessage.getMessageURI());
     }
 }

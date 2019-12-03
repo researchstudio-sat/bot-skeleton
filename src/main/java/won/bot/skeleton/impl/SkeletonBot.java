@@ -6,10 +6,9 @@ import won.bot.framework.eventbot.action.impl.LogAction;
 import won.bot.framework.eventbot.action.impl.RandomDelayedAction;
 import won.bot.framework.eventbot.bus.EventBus;
 import won.bot.framework.eventbot.event.impl.atomlifecycle.AtomCreatedEvent;
-import won.bot.framework.eventbot.event.impl.lifecycle.ActEvent;
 import won.bot.framework.eventbot.event.impl.wonmessage.CloseFromOtherAtomEvent;
 import won.bot.framework.eventbot.event.impl.wonmessage.MessageFromOtherAtomEvent;
-import won.bot.framework.eventbot.event.impl.wonmessage.OpenFromOtherAtomEvent;
+import won.bot.framework.eventbot.event.impl.wonmessage.ConnectFromOtherAtomEvent;
 import won.bot.framework.eventbot.filter.impl.AtomUriInNamedListFilter;
 import won.bot.framework.eventbot.filter.impl.NotFilter;
 import won.bot.framework.eventbot.listener.BaseEventListener;
@@ -29,6 +28,7 @@ public class SkeletonBot extends EventBot implements MatcherExtension{
     private int registrationMatcherRetryInterval;
     private MatcherBehaviour matcherBehaviour;
 
+    // bean setter, used by spring
     public void setRegistrationMatcherRetryInterval(final int registrationMatcherRetryInterval) {
         this.registrationMatcherRetryInterval = registrationMatcherRetryInterval;
     }
@@ -52,6 +52,7 @@ public class SkeletonBot extends EventBot implements MatcherExtension{
         // create filters to determine which atoms the bot should react to
         NotFilter noOwnAtoms = new NotFilter(new AtomUriInNamedListFilter(ctx, ctx.getBotContextWrapper().getAtomCreateListName()));
         // TODO: noDebugAtoms or noBotAtoms to prevent reacting to other bot atoms
+        // noInternalServiceAtomEventFilter
         // other filter possibilities: noPersonas, noReactionAtoms, onlyJobSearchAtoms,...
 
         // create the echo atom - if we're not reacting to the creation of our own echo
@@ -87,7 +88,7 @@ public class SkeletonBot extends EventBot implements MatcherExtension{
         // * open events - so it initiates the chain reaction of responses
         BaseEventListener autoResponder = new ActionOnEventListener(ctx, new RespondWithEchoToMessageAction(ctx));
 
-        bus.subscribe(OpenFromOtherAtomEvent.class, autoResponder);
+        bus.subscribe(ConnectFromOtherAtomEvent.class, autoResponder);
         bus.subscribe(MessageFromOtherAtomEvent.class, autoResponder);
         bus.subscribe(CloseFromOtherAtomEvent.class,
                 new ActionOnEventListener(ctx, new LogAction(ctx, "received close message from remote atom.")));

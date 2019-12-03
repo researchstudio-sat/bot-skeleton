@@ -21,8 +21,8 @@ import won.bot.framework.eventbot.event.MessageEvent;
 import won.bot.framework.eventbot.listener.EventListener;
 import won.protocol.exception.WonMessageBuilderException;
 import won.protocol.message.WonMessage;
-import won.protocol.message.WonMessageBuilder;
-import won.protocol.service.WonNodeInformationService;
+import won.protocol.message.builder.WonMessageBuilder;
+//import won.protocol.service.WonNodeInformationService;
 import won.protocol.util.WonRdfUtils;
 
 import java.lang.invoke.MethodHandles;
@@ -67,7 +67,7 @@ public class RespondWithEchoToMessageAction extends BaseEventBotAction {
             logger.debug("sending message " + message);
             try {
                 getEventListenerContext().getWonMessageSender()
-                                .sendWonMessage(createWonMessage(connectionUri, message));
+                                .prepareAndSendMessage(createWonMessage(connectionUri, message));
             } catch (Exception e) {
                 logger.warn("could not send message via connection {}", connectionUri, e);
             }
@@ -89,16 +89,29 @@ public class RespondWithEchoToMessageAction extends BaseEventBotAction {
     }
 
     private WonMessage createWonMessage(URI connectionURI, String textMessage) throws WonMessageBuilderException {
-        WonNodeInformationService wonNodeInformationService = getEventListenerContext().getWonNodeInformationService();
+//        WonNodeInformationService wonNodeInformationService = getEventListenerContext().getWonNodeInformationService();
         Dataset connectionRDF = getEventListenerContext().getLinkedDataSource().getDataForResource(connectionURI);
-        URI targetAtom = WonRdfUtils.ConnectionUtils.getTargetAtomURIFromConnection(connectionRDF, connectionURI);
-        URI localAtom = WonRdfUtils.ConnectionUtils.getLocalAtomURIFromConnection(connectionRDF, connectionURI);
-        URI wonNode = WonRdfUtils.ConnectionUtils.getWonNodeURIFromConnection(connectionRDF, connectionURI);
-        Dataset targetAtomRDF = getEventListenerContext().getLinkedDataSource().getDataForResource(targetAtom);
-        URI messageURI = wonNodeInformationService.generateEventURI(wonNode);
-        return WonMessageBuilder.setMessagePropertiesForConnectionMessage(messageURI, connectionURI, localAtom, wonNode,
-                        WonRdfUtils.ConnectionUtils.getTargetConnectionURIFromConnection(connectionRDF, connectionURI),
-                        targetAtom, WonRdfUtils.AtomUtils.getWonNodeURIFromAtom(targetAtomRDF, targetAtom), textMessage)
-                        .build();
+//        URI targetAtom = WonRdfUtils.ConnectionUtils.getTargetAtomURIFromConnection(connectionRDF, connectionURI);
+//        URI localAtom = WonRdfUtils.ConnectionUtils.getLocalAtomURIFromConnection(connectionRDF, connectionURI);
+//        URI wonNode = WonRdfUtils.ConnectionUtils.getWonNodeURIFromConnection(connectionRDF, connectionURI);
+//        Dataset targetAtomRDF = getEventListenerContext().getLinkedDataSource().getDataForResource(targetAtom);
+//        URI messageURI = wonNodeInformationService.generateEventURI(wonNode);
+
+        URI socket = WonRdfUtils.ConnectionUtils.getSocketURIFromConnection(connectionRDF, connectionURI);
+        URI targetSocket = WonRdfUtils.ConnectionUtils.getTargetConnectionURIFromConnection(connectionRDF, connectionURI);
+
+        // TODO: verify that this is correct
+        return WonMessageBuilder.connectionMessage().sockets().sender(socket).recipient(targetSocket).content().text(textMessage).build();
+
+//        return WonMessageBuilder
+//                .setMessagePropertiesForConnectionMessage(
+//                        messageURI,
+//                        connectionURI,
+//                        localAtom,
+//                        wonNode,
+//                        WonRdfUtils.ConnectionUtils.getTargetConnectionURIFromConnection(connectionRDF, connectionURI),
+//                        targetAtom,
+//                        WonRdfUtils.AtomUtils.getWonNodeURIFromAtom(targetAtomRDF, targetAtom), textMessage)
+//                        .build();
     }
 }
