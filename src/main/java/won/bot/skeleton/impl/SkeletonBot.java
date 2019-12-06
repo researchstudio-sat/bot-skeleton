@@ -77,23 +77,20 @@ public class SkeletonBot extends EventBot implements MatcherExtension, ServiceAt
         // listen for the MatcherExtensionAtomCreatedEvent
         bus.subscribe(MatcherExtensionAtomCreatedEvent.class, atomCreator);
         // as soon as the echo atom is created, connect to original
-        BaseEventListener atomConnector = new ActionOnEventListener(ctx, "atomConnector",
-                                                                    new RandomDelayedAction(
-                                                                            ctx,
-                                                                            5000,
-                                                                            5000,
-                                                                            1,
-                                                                            new ConnectWithAssociatedAtomAction(ctx,
-                                                                                                                SocketType.ChatSocket
-                                                                                                                        .getURI(),
-                                                                                                                SocketType.ChatSocket
-                                                                                                                        .getURI(),
-                                                                                                                "Greetings! I am the EchoBot! I will repeat everything you say, which you might "
-                                                                                                                        + "find useful for testing purposes."
-                                                                            )
-                                                                    )
+        bus.subscribe(AtomCreatedEvent.class, noInternalServiceAtomEventFilter, new RandomDelayedAction(
+                ctx,
+                5000,
+                5000,
+                1,
+                new ConnectWithAssociatedAtomAction(ctx,
+                        SocketType.ChatSocket
+                                .getURI(),
+                        SocketType.ChatSocket
+                                .getURI(),
+                        "Greetings! I am the EchoBot! I will repeat everything you say, which you might "
+                                + "find useful for testing purposes."
+                ))
         );
-        bus.subscribe(AtomCreatedEvent.class, atomConnector);
 
         // add a listener that auto-responds to messages by a message
         // after 10 messages, it unsubscribes from all events
