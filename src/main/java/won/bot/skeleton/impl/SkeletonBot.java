@@ -13,6 +13,8 @@ import won.bot.framework.eventbot.filter.impl.AtomUriInNamedListFilter;
 import won.bot.framework.eventbot.filter.impl.NotFilter;
 import won.bot.framework.eventbot.listener.BaseEventListener;
 import won.bot.framework.eventbot.listener.impl.ActionOnEventListener;
+import won.bot.framework.extensions.serviceatom.ServiceAtomBehaviour;
+import won.bot.framework.extensions.serviceatom.ServiceAtomExtension;
 import won.bot.skeleton.action.ConnectWithAssociatedAtomAction;
 import won.bot.skeleton.action.CreateEchoAtomWithSocketsAction;
 import won.bot.skeleton.action.RespondWithEchoToMessageAction;
@@ -23,14 +25,20 @@ import won.bot.framework.extensions.matcher.MatcherBehaviour;
 import won.bot.framework.extensions.matcher.MatcherExtension;
 import won.bot.framework.extensions.matcher.MatcherExtensionAtomCreatedEvent;
 
-public class SkeletonBot extends EventBot implements MatcherExtension{
+public class SkeletonBot extends EventBot implements MatcherExtension, ServiceAtomExtension {
 
     private int registrationMatcherRetryInterval;
     private MatcherBehaviour matcherBehaviour;
+    private ServiceAtomBehaviour serviceAtomBehaviour;
 
     // bean setter, used by spring
     public void setRegistrationMatcherRetryInterval(final int registrationMatcherRetryInterval) {
         this.registrationMatcherRetryInterval = registrationMatcherRetryInterval;
+    }
+
+    @Override
+    public ServiceAtomBehaviour getServiceAtomBehaviour() {
+        return serviceAtomBehaviour;
     }
 
     @Override
@@ -43,6 +51,10 @@ public class SkeletonBot extends EventBot implements MatcherExtension{
         EventListenerContext ctx = getEventListenerContext();
         EventBus bus = getEventBus();
 
+        // activate ServiceAtomBehaviour
+        serviceAtomBehaviour = new ServiceAtomBehaviour(ctx);
+        serviceAtomBehaviour.activate();
+
         // set up matching extension
         // as this is an extension, it can be activated and deactivated as needed
         // if activated, a MatcherExtensionAtomCreatedEvent is sent every time a new atom is created on a monitored node
@@ -51,6 +63,8 @@ public class SkeletonBot extends EventBot implements MatcherExtension{
 
         // create filters to determine which atoms the bot should react to
         NotFilter noOwnAtoms = new NotFilter(new AtomUriInNamedListFilter(ctx, ctx.getBotContextWrapper().getAtomCreateListName()));
+        // filter to prevent reacting to serviceAtom<->ownedAtom events;
+        NotFilter noInternalServiceAtomEventFilter = getNoInternalServiceAtomEventFilter();
         // TODO: noDebugAtoms or noBotAtoms to prevent reacting to other bot atoms
         // noInternalServiceAtomEventFilter
         // other filter possibilities: noPersonas, noReactionAtoms, onlyJobSearchAtoms,...
@@ -86,10 +100,8 @@ public class SkeletonBot extends EventBot implements MatcherExtension{
         // subscribe it to:
         // * message events - so it responds
         // * open events - so it initiates the chain reaction of responses
-        BaseEventListener autoResponder = new ActionOnEventListener(ctx, new RespondWithEchoToMessageAction(ctx));
-
-        bus.subscribe(ConnectFromOtherAtomEvent.class, autoResponder);
-        bus.subscribe(MessageFromOtherAtomEvent.class, autoResponder);
+        bus.subscribe(ConnectFromOtherAtomEvent.class, noInternalServiceAtomEventFilter, new RespondWithEchoToMessageAction(ctx));
+        bus.subscribe(MessageFromOtherAtomEvent.class, noInternalServiceAtomEventFilter, new RespondWithEchoToMessageAction(ctx));
         bus.subscribe(CloseFromOtherAtomEvent.class,
                 new ActionOnEventListener(ctx, new LogAction(ctx, "received close message from remote atom.")));
     }
