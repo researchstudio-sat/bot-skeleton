@@ -42,7 +42,7 @@
         </property>
     </bean>
 
-    <bean id="botContextWrapper" class="won.bot.framework.bot.context.BotContextWrapper">
+    <bean id="botContextWrapper" class="won.bot.skeleton.context.SkeletonBotContextWrapper">
         <constructor-arg name="botContext" ref="${botContext.impl}"/>
         <constructor-arg name="botName" value="${bot.name}"/>
     </bean>
