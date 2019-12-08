@@ -20,23 +20,6 @@ export WON_NODE_URI="https://hackathonnode.matchat.org/won"
 mvn clean package
 java -jar target/bot.jar
 ```
-When bot startup is complete, you should see an output similar to this:
-```
-[...]
-2019-12-08 18:45:59.888  INFO 2056 --- [taskScheduler-6] w.b.f.eventbot.action.impl.LogAction     : Successfully registered as Matcher
-2019-12-08 18:46:03.523  INFO 2056 --- [taskScheduler-5] w.b.f.e.s.ServiceAtomBehaviour           : #####################################################################################
-2019-12-08 18:46:03.523  INFO 2056 --- [taskScheduler-5] w.b.f.e.s.ServiceAtomBehaviour           : BotServiceAtom creation successful, new atom URI is https://hackathonnode.matchat.org/won/resource/atom/wpt10wokd33ert687dqw
-2019-12-08 18:46:03.523  INFO 2056 --- [taskScheduler-5] w.b.f.e.s.ServiceAtomBehaviour           : #####################################################################################
-```
-If this method does not work (it does not for some setups), try the following:
-
-```
-cd bot-skeleton
-export WON_CONFIG_DIR="$(pwd)/conf"
-export WON_NODE_URI="https://hackathonnode.matchat.org/won"
-mvn spring-boot:run
-```
-
 Now go to [What's new](https://hackathon.matchat.org/owner/#!/overview) to find your bot, connect and [create an atom](https://hackathon.matchat.org/owner/#!/create) to see the bot in action.
 
 ### In Intellij Idea
