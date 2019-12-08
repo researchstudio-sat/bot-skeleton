@@ -9,7 +9,7 @@ The Bot Skeleton is a [Spring Boot Application](https://docs.spring.io/spring-bo
 
 ### Prerequisites
 
-- [Java 8 JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) or higher installed (openJDK 12 is currently not supported and won't work)
+- [Openjdk 8](https://adoptopenjdk.net/index.html) - the method described here does **not work** with the Oracle 8 JDK!
 - Maven framework set up
 
 ### On the command line
@@ -40,12 +40,6 @@ If you get a message indicating your keysize is restricted on startup (`JCE unli
 ## Start coding
 
 Once the skeleton bot is running, you can use it as a base for implementing your own application. 
-
-### Prerequisites
-
-- [Java 8 JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) or higher installed (openJDK 12 is currently not supported and won't work)
-- Java IDE of choice set up
-- Maven framework set up
 
 ## Setting up
 - Download or clone this repository
