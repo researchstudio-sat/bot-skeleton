@@ -49,7 +49,6 @@ public class MatcherExtensionAtomCreatedAction extends BaseEventBotAction {
                                             .build();
                 ctx.getWonMessageSender().prepareAndSendMessage(wonMessage);
             }
-            connectedSocketsMapSet.put(senderSocket, targetSocketsSet);
         }
     }
 }
