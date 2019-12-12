@@ -11,6 +11,7 @@ The Bot Skeleton is a [Spring Boot Application](https://docs.spring.io/spring-bo
 
 - [Openjdk 8](https://adoptopenjdk.net/index.html) - the method described here does **not work** with the Oracle 8 JDK!
 - Maven framework set up
+- Use this repository as a template (green button in github GUI), fork it, or clone it.
 
 ### On the command line
 
@@ -40,10 +41,9 @@ If you get a message indicating your keysize is restricted on startup (`JCE unli
 ## Start coding
 
 Once the skeleton bot is running, you can use it as a base for implementing your own application. 
+- Add/edit config files in `src/main/resources`
+- Follow the [Mini HowTos](https://github.com/researchstudio-sat/webofneeds/tree/master/documentation/howto/README.md). 
 
-## Setting up
-- Download or clone this repository
-- Add config files
+For an introduction to the Web of Needs Bot framework, have a look at the [Bot Readme](https://github.com/researchstudio-sat/webofneeds/blob/master/webofneeds/won-bot/README.md).
 
-Please refer to the general [Bot Readme](https://github.com/researchstudio-sat/webofneeds/blob/master/webofneeds/won-bot/README.md) for more information on Web of Needs Bot applications.
 
